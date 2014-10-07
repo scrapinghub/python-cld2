@@ -38,11 +38,13 @@ class cldtest(distutils.core.Command):
         errno = subprocess.call([sys.executable, 'tests/cld_test.py'])
         raise SystemExit(errno)
 
-module = Extension('cld2',
+module = Extension('cld2full',
                    language='c++',
+                   extra_compile_args = ['-DCLD2_FULL'],
                    include_dirs = ['%s/public' % CLD2_PATH, '%s/internal' % CLD2_PATH],
-                   libraries = ['cld2'],
+                   libraries = ['cld2_full'],
                    sources=['pycldmodule.cc', 'encodings.cc'],
+                   libdirs = ['./build'],
                    )
 
 setup(name='chromium_compact_language_detector',
