@@ -47,14 +47,15 @@ module = Extension('cld2full',
                    libdirs = ['./build'],
                    )
 
-setup(name='chromium_compact_language_detector',
+setup(name='python-cld2',
       version='2.0',
       author='Michael McCandless',
       author_email='mail@mikemccandless.com',
       description='Python bindings around Google Chromium\'s embedded compact language detection library (CLD2)',
       ext_modules = [module],
+      requires=['cld2'],
       license = 'Apache2',
-      url = 'http://code.google.com/p/chromium-compact-language-detector/',
+      url = 'https://github.com/scrapinghub/python-cld2/',
       classifiers = [
         'License :: OSI Approved :: BSD License',
         'Operating System :: MacOS :: MacOS X',
