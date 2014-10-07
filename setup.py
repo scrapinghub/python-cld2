@@ -7,34 +7,6 @@ import subprocess
 import sys
 import os
 
-# Checking existence of pkg-config.
-try:
-    subprocess.check_call(["pkg-config", '--version'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-except (subprocess.CalledProcessError, OSError):
-    sys.stderr.write('`pkg-config` has not been found but this setup script relies on it.\n')
-    sys.exit(os.EX_CONFIG)
-
-# Checking existence and path of `cld` C++ library.
-try:
-    call = subprocess.Popen(['pkg-config', '--libs', '--cflags', 'cld'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-    output, error = call.communicate()
-    output = output.decode('UTF-8')
-    error = error.decode('UTF-8')
-    if len(error) != 0:
-        sys.stderr.write('`pkg-config --libs --cflags cld` returns in error: \n' + error + '\n')
-        raise OSError
-except (subprocess.CalledProcessError, OSError):
-    sys.stderr.write('The `cld` C++ library is absent from this system. Please install it.\n')
-    sys.exit(os.EX_CONFIG)
-
-include_dirs = ['.']
-library_dirs = ['.']
-for flags in output.split():
-    if flags[:2] == '-I':
-        include_dirs.append(flags[2:])
-    elif flags[:2] == '-L':
-        library_dirs.append(flags[2:])
-
 # Setup some define macros for compilation.
 defines = [('CLD_WINDOWS', None)]
 if platform.system() == 'Windows':
@@ -53,12 +25,10 @@ class cldtest(distutils.core.Command):
         errno = subprocess.call([sys.executable, 'tests/cld_test.py'])
         raise SystemExit(errno)
 
-#                   include_dirs=['../../src/encodings/compact_lang_det', '../../src'],
-#                   library_dirs=['../../src/.libs'],
 module = Extension('cld',
                    language='c++',
-                   include_dirs = include_dirs,
-                   library_dirs = library_dirs,
+                   include_dirs = ["/usr/include/cld2/public"],
+                   library_dirs = "/usr/lib",
                    define_macros = defines,
                    libraries = ['cld'],
                    sources=['src/pycldmodule.cc'],
@@ -69,6 +39,7 @@ setup(name='chromium_compact_language_detector',
       author='Michael McCandless',
       author_email='mail@mikemccandless.com',
       description='Python bindings around Google Chromium\'s embedded compact language detection library',
+      requires=['cld2'],
       ext_modules = [module],
       license = 'BSD',
       url = 'http://code.google.com/p/chromium-compact-language-detector/',
