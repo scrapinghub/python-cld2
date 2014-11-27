@@ -46,8 +46,5 @@ For documentation run:
 
   * python -c "import cld2; help(cld2.detect)"
 
-NOTE: gen_test.py and gen_enc.py were used as temporary helpers during
-development and are not needed for building
-
 NOTE: you must pass only valid UTF-8 bytes to the detect function,
 otherwise you can hit segmentation fault or get incorrect results.
