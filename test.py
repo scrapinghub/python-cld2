@@ -25,18 +25,7 @@ import traceback
 version = sys.version.split()[0]
 version = version[:version.rfind('.')]
 
-# Find right .so under build:
-moduleDir = None
-for dir, subDirs, files in os.walk('build'):
-  if dir.endswith(version) and dir.find('/lib') != -1:
-    for file in files:
-      if file.endswith('.so'):
-        moduleDir = dir
-        break
-    
-if moduleDir is None:
-  raise RuntimeError('could not find built libcld.so or cld.cpython-32mu.so; be sure to first run python setup.py build')
-
+moduleDir = "."
 sys.path.insert(0, moduleDir)
 
 import cld2full
