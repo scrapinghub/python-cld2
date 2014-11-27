@@ -1,0 +1,3 @@
+
+test:
+	echo "Disabled because it uses preinstalled cld2"
