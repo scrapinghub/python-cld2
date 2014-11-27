@@ -1,4 +1,5 @@
 
 test:
-	python setup.py build_ext --inplace
+	python setup.py build
+	python setup_full.py build
 	nosetests
