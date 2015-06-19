@@ -16,8 +16,8 @@ To build:
     (detects 163 languages).  Install those libraries somewhere on
     your LD_LIBRARY_PATH, for example copy them into /usr/lib64.
 
-  * Edit both setup.py and setup_full.py: edit CLD2_PATH to point to
-    where you checked out the CLD2 sources.
+  * Define the CLD2_PATH environment variable to point to where you
+    checked out the CLD2 sources: export CLD2_PATH='/path/to/cld2'
 
   * python setup.py build
 
