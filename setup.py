@@ -22,8 +22,8 @@ import sys
 import os
 
 # NOTE: change this to point to where you checked out the CLD2
-# sources:
-CLD2_PATH = '/usr/include/cld2'
+# sources, or define the CLD2_PATH environment variable
+CLD2_PATH = os.environ.get('CLD2_PATH', '/usr/include/cld2')
 
 # Test suite
 class cldtest(distutils.core.Command):
